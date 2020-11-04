@@ -11,27 +11,22 @@ $('#search-form').on('submit', function (event) {
         method: 'GET'
     }).then(function (response) {
 
+        console.log(response.list)
+        //    var date = response.list[0].dt_txt
 
-       var date = response.list[0].dt_txt
-       var temp = response.list[0].main.temp
-       var humidity = response.list[0].main.humidity
-       var condition = response.list[0].weather[0].description
+        for (var i = 0; i < 5; i++) {
 
-       var weatherCard = $('#day1')
-       var weatherInfo = $(`<div class= 'card-body'>${date}<br>Temp: ${temp}<br>Humidity: ${humidity}<br>${condition}</div>`)
-       $(weatherCard).append(weatherInfo)
+            var temp = response.list[i].main.temp
+            temp = Math.floor((temp - 273.15) * (9 / 5) + 32)
+            var humidity = response.list[i].main.humidity
+            var condition = response.list[i].weather[0].description
 
-        // Returns date of the first day in the array
-        console.log(response.list[0])
+            var weatherCard = $(`#day${i + 1}`)
+            weatherCard.html('')
+            var weatherInfo = $(`<div class= 'card-body'>Temp: ${temp}&#8457<br>Humidity: ${humidity}%<br>${condition}</div>`)
+            $(weatherCard).append(weatherInfo)
 
-        // Temperature
-        console.log('Temperature:' + response.list[0].main.temp)
-
-        // Humidity
-        console.log('Humidity:' + response.list[0].main.humidity + '%')
-
-        // Weather condition (sunny/cloudy/rain)
-        console.log('Weather Condition:' + response.list[0].weather[0].description)
+        }
 
     })
 })
