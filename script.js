@@ -4,7 +4,7 @@ $('#search-form').on('submit', function (event) {
     var userInput = $('#search-box').val()
     console.log(userInput)
 
-    var queryURL = `https://api.openweathermap.org/data/2.5/forecast?q=${userInput}&cnt=5&appid=52f80a8e6eee61dc210e113236e5b264`
+    var queryURL = `https://api.openweathermap.org/data/2.5/forecast?q=${userInput}&appid=52f80a8e6eee61dc210e113236e5b264`
 
     $.ajax({
         url: queryURL,
@@ -14,33 +14,27 @@ $('#search-form').on('submit', function (event) {
         console.log(response.list)
         //    var date = response.list[0].dt_txt
 
-        for (var i = 0; i < 5; i++) {
 
-            var temp = response.list[i].main.temp
-            temp = Math.floor(((temp - 273.15) * 1.8) + 32)
-            var humidity = response.list[i].main.humidity
-            var condition = response.list[i].weather[0].main
+        // Counter controls where the information will be stored
+        var counter = 0
 
-            switch (condition) {
-                case 'Clouds':
-                    condition = '<i class="fas fa-cloud-sun"></i>';
-                    break;
-                case 'Clear':
-                    condition = '<i class="fas fa-sun"></i>';
-                    break;
-                case 'Rain':
-                    condition = '<i class="fas fa-cloud-rain"></i>';
-                    break;
-                    case 'Snow':
-                        condition = '<i class="fas fa-snowflake"></i>';
-                        break;
-            }
+        // Starts at the 4th result to display the noon forecast, jumps every 8 positions to get the noon forecast for each day.
+        for (var i = 4; i < response.list.length; i+= 8) {
 
-            var weatherCard = $(`#day${i + 1}`)
-            weatherCard.html('')
-            var weatherInfo = $(`<div class= 'card-body'>Temp: ${temp}&#8457<br>Humidity: ${humidity}%<br>${condition}</div>`)
-            $(weatherCard).append(weatherInfo)
-
+                var temp = response.list[i].main.temp
+                temp = Math.floor(((temp - 273.15) * 1.8) + 32)
+                var humidity = response.list[i].main.humidity
+                var condition = response.list[i].weather[0].main
+                var cardDate = response.list[i].dt_txt
+                condition = checkConditions(condition)
+    
+                var weatherCard = $(`#day${counter + 1}`)
+                weatherCard.html('')
+                var weatherInfo = $(`<div class= 'card-body'>${cardDate}<br>Temp: ${temp}&#8457<br>Humidity: ${humidity}%<br>${condition}</div>`)
+                $(weatherCard).append(weatherInfo)
+            
+            // Counter is incremented after data is stored
+            counter++
         }
 
     })
@@ -51,15 +45,17 @@ $('#search-form').on('submit', function (event) {
         url: dayURL,
         method: 'GET'
     }).then(function (response) {
-
+        console.log(response)
         var temp = response.main.temp
         temp = Math.floor(((temp - 273.15) * 1.8) + 32)
         var humidity = response.main.humidity
         var windSpeed = response.wind.speed
-
-        $('#temperature').html(`Temperature: ${temp} &#8457`)
-        $('#humidity').html(`Humidity: ${humidity}%`)
-        $('#windSpeed').html(`Wind Speed: ${windSpeed}`)
+        var city = response.name
+        
+        $('#city').html(`${city}`)
+        $('#temperature').html(`${temp}`)
+        $('#humidity').html(`${humidity}`)
+        $('#windSpeed').html(`${windSpeed}`)
 
         var longitude = response.coord.lon
         var latitude = response.coord.lat
@@ -68,7 +64,23 @@ $('#search-form').on('submit', function (event) {
             url: `http://api.openweathermap.org/data/2.5/uvi?lat=${latitude}&lon=${longitude}&appid=52f80a8e6eee61dc210e113236e5b264`,
             method: 'GET'
         }).then(function (response) {
-            $('#uvIndex').html(`UV Index: ${response.value}`)
+            var uvIndex = $('#uvIndex')
+            uvIndex.html(` ${response.value}`)
+
+            switch (true) {
+                case (response.value < 3 && response.value >= 0):
+                    uvIndex.css('background-color', 'green');
+                    break;
+                case (response.value < 6 && response.value >= 3):
+                    uvIndex.css('background-color', 'rgb(231, 231, 45)');
+                    break;
+                case (response.value < 8 && response.value >= 6):
+                    uvIndex.css('background-color', 'orange');
+                    break;
+                case (response.value >= 8):
+                    uvIndex.css('background-color', 'red');
+                    break;
+            }
         })
 
     })
@@ -76,4 +88,22 @@ $('#search-form').on('submit', function (event) {
 
 
 
+
+function checkConditions(condition) {
+    switch (condition) {
+        case 'Clouds':
+            condition = '<i class="fas fa-cloud-sun"></i>'
+            break
+        case 'Clear':
+            condition = '<i class="fas fa-sun"></i>'
+            break
+        case 'Rain':
+            condition = '<i class="fas fa-cloud-rain"></i>'
+            break
+        case 'Snow':
+            condition = '<i class="fas fa-snowflake"></i>'
+            break
+    }
+    return condition
+}
 
