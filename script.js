@@ -25,10 +25,14 @@ $('#search-form').on('submit', function (event) {
                 temp = Math.floor(((temp - 273.15) * 1.8) + 32)
                 var humidity = response.list[i].main.humidity
                 var condition = response.list[i].weather[0].main
-                var cardDate = response.list[i].dt_txt
+                var cardDate = new Date(response.list[i].dt_txt)
+                cardDate = cardDate.toLocaleDateString()
+                // cardDate = 
+
                 condition = checkConditions(condition)
     
                 var weatherCard = $(`#day${counter + 1}`)
+                // Clear the card before adding new information
                 weatherCard.html('')
                 var weatherInfo = $(`<div class= 'card-body'>${cardDate}<br>Temp: ${temp}&#8457<br>Humidity: ${humidity}%<br>${condition}</div>`)
                 $(weatherCard).append(weatherInfo)
@@ -51,8 +55,17 @@ $('#search-form').on('submit', function (event) {
         var humidity = response.main.humidity
         var windSpeed = response.wind.speed
         var city = response.name
-        
+        var condition = response.weather[0].main
+        console.log(condition)
+        condition = checkConditions(condition)
+        var currentDate = new Date()
+        currentDate = currentDate.toLocaleDateString()
+
+
+
         $('#city').html(`${city}`)
+        $('#currentDate').html(`(${currentDate})`)
+        $('#currentCond').html(`${condition}`)
         $('#temperature').html(`${temp}`)
         $('#humidity').html(`${humidity}`)
         $('#windSpeed').html(`${windSpeed}`)
