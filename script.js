@@ -17,7 +17,7 @@ $('#search-form').on('submit', function (event) {
         for (var i = 0; i < 5; i++) {
 
             var temp = response.list[i].main.temp
-            temp = Math.floor((temp - 273.15) * (9 / 5) + 32)
+            temp = Math.floor(((temp - 273.15)*1.8) + 32)
             var humidity = response.list[i].main.humidity
             var condition = response.list[i].weather[0].description
 
@@ -27,6 +27,34 @@ $('#search-form').on('submit', function (event) {
             $(weatherCard).append(weatherInfo)
 
         }
+
+    })
+
+    var dayURL = `https://api.openweathermap.org/data/2.5/weather?q=${userInput}&appid=52f80a8e6eee61dc210e113236e5b264`
+
+    $.ajax({
+        url: dayURL,
+        method: 'GET'
+    }).then(function (response) {
+
+        var temp = response.main.temp
+        temp = Math.floor(((temp - 273.15)*1.8) + 32)
+        var humidity = response.main.humidity
+        var windSpeed = response.wind.speed
+
+        $('#temperature').html(`Temperature: ${temp} &#8457`)
+        $('#humidity').html(`Humidity: ${humidity}%`)
+        $('#windSpeed').html(`Wind Speed: ${windSpeed}`)
+
+        var longitude = response.coord.lon
+        var latitude = response.coord.lat
+
+        $.ajax({
+            url: `http://api.openweathermap.org/data/2.5/uvi?lat=${latitude}&lon=${longitude}&appid=52f80a8e6eee61dc210e113236e5b264`,            
+            method: 'GET'
+        }).then(function (response) {
+            $('#uvIndex').html(`UV Index: ${response.value}`)
+        })
 
     })
 })
