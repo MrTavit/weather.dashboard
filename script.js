@@ -17,9 +17,24 @@ $('#search-form').on('submit', function (event) {
         for (var i = 0; i < 5; i++) {
 
             var temp = response.list[i].main.temp
-            temp = Math.floor(((temp - 273.15)*1.8) + 32)
+            temp = Math.floor(((temp - 273.15) * 1.8) + 32)
             var humidity = response.list[i].main.humidity
-            var condition = response.list[i].weather[0].description
+            var condition = response.list[i].weather[0].main
+
+            switch (condition) {
+                case 'Clouds':
+                    condition = '<i class="fas fa-cloud-sun"></i>';
+                    break;
+                case 'Clear':
+                    condition = '<i class="fas fa-sun"></i>';
+                    break;
+                case 'Rain':
+                    condition = '<i class="fas fa-cloud-rain"></i>';
+                    break;
+                    case 'Snow':
+                        condition = '<i class="fas fa-snowflake"></i>';
+                        break;
+            }
 
             var weatherCard = $(`#day${i + 1}`)
             weatherCard.html('')
@@ -38,7 +53,7 @@ $('#search-form').on('submit', function (event) {
     }).then(function (response) {
 
         var temp = response.main.temp
-        temp = Math.floor(((temp - 273.15)*1.8) + 32)
+        temp = Math.floor(((temp - 273.15) * 1.8) + 32)
         var humidity = response.main.humidity
         var windSpeed = response.wind.speed
 
@@ -50,7 +65,7 @@ $('#search-form').on('submit', function (event) {
         var latitude = response.coord.lat
 
         $.ajax({
-            url: `http://api.openweathermap.org/data/2.5/uvi?lat=${latitude}&lon=${longitude}&appid=52f80a8e6eee61dc210e113236e5b264`,            
+            url: `http://api.openweathermap.org/data/2.5/uvi?lat=${latitude}&lon=${longitude}&appid=52f80a8e6eee61dc210e113236e5b264`,
             method: 'GET'
         }).then(function (response) {
             $('#uvIndex').html(`UV Index: ${response.value}`)
