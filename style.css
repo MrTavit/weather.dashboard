@@ -1,3 +1,6 @@
+body{
+    background-color: rgb(108, 123, 253);
+}
 .container {
     display: grid;
     grid-gap: 10px;
@@ -8,9 +11,13 @@
     'current'
     'fiveDay'
 }
-
+.card-body {
+    background-color: rgb(170, 49, 240);
+}
 .jumbotron {
     grid-area: header;
+    background-color: rgb(170, 49, 240);
+    color: white;
 }
 
 #search-form {
@@ -39,4 +46,15 @@
         'search current'
         'results fiveDay';
      }
+}
+
+.results-text {
+    color: white;
+}
+
+.listCity{
+    border-style: ridge;
+    text-transform: capitalize;
+    display: none;
+    background-color: white;
 }

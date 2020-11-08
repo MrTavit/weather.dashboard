@@ -19,41 +19,43 @@
     <div class="container border-primary">
         <div class="jumbotron">
             <h1 class="display-4 text-center">Weather Dashboard</h1>
+            <p class="text-center">Get the current weather as well as a 5 day forecast for a city</p>
         </div>
 
 
-                <form id='search-form'>
-                    <label for="search-box">Search for a city:</label>
-                    <input type="text" id='search-box' placeholder="City">
-                    <button type='submit' id='start-search' class='btn btn-primary'>
-                        <i class="fas fa-search"></i>
-                    </button>
-                </form>
-                <div id="results-here">
-                    <div id="userCity1"></div>
-                    <div id="userCity2"></div>
-                    <div id="userCity3"></div>
-                    <div id="userCity4"></div>
-                    <div id="userCity5"></div>
-                    <div id="userCity6"></div>
-                    <div id="userCity7"></div>
-                    <div id="userCity8"></div>
-                    <div id="userCity9"></div>
-                    <div id="userCity10"></div>
-                </div>
+        <form id='search-form'>
+            <label for="search-box">Search for a city:</label>
+            <input type="text" id='search-box' placeholder="City">
+            <button type='submit' id='start-search' class='btn btn-primary'>
+                <i class="fas fa-search"></i>
+            </button>
+        </form>
+        <div id="results-here">
+            <p class='text-center results-text'>Click on a previously searched city to see the forecast again<br><i class="fas fa-hand-point-down"></i></p>
+            <div id="userCity1" class='listCity text-center'></div>
+            <div id="userCity2" class='listCity text-center'></div>
+            <div id="userCity3" class='listCity text-center'></div>
+            <div id="userCity4" class='listCity text-center'></div>
+            <div id="userCity5" class='listCity text-center'></div>
+            <div id="userCity6" class='listCity text-center'></div>
+            <div id="userCity7" class='listCity text-center'></div>
+            <div id="userCity8" class='listCity text-center'></div>
+            <div id="userCity9" class='listCity text-center'></div>
+            <div id="userCity10" class='listCity text-center'></div>
+        </div>
 
 
-            <div class="currentDayContainer">
-                <h2>
-                    <span id="city"></span>
-                    <span id='currentDate'></span>
-                    <span id="currentCond"></span>
-                </h2>
-                <div>Temperature: <span id='temperature'></span> &#8457</div>
-                <div>Humidity: <span id="humidity"></span>%</div>
-                <div>Wind Speed: <span id='windSpeed'></span> MPH </div>
-                <div>UV Index: <span id='uvIndex'></span> </div>
-            </div>
+        <div class="currentDayContainer">
+            <h2>
+                <span id="city"></span>
+                <span id='currentDate'></span>
+                <span id="currentCond"></span>
+            </h2>
+            <div>Temperature: <span id='temperature'></span> &#8457</div>
+            <div>Humidity: <span id="humidity"></span>%</div>
+            <div>Wind Speed: <span id='windSpeed'></span> MPH </div>
+            <div>UV Index: <span id='uvIndex'></span> </div>
+        </div>
         <div class="fiveDayContainer">
             <!-- <div class="col"></div> -->
             <div class="">

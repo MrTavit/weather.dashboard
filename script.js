@@ -22,17 +22,18 @@ $('[id^=userCity]').on('click', function (event) {
 
 // Adds the most recently searched city to the bottom of the list. When the last text field is reached, reset to the first and overwrite from there.
 function addCity(userInput) {
-    if(cityCounter >= 10){
+    if (cityCounter > 10) {
         cityCounter = 1
     }
     $(`#userCity${cityCounter}`).text(`${userInput}`)
+    $(`#userCity${cityCounter}`).toggle()
 
 }
 
 
 // Initiliazes
-function init (){
-    if(localStorage.getItem('Last City')){
+function init() {
+    if (localStorage.getItem('Last City')) {
         getWeather(localStorage.getItem('Last City'))
     }
 }
@@ -51,12 +52,13 @@ function getWeather(userInput) {
         url: queryURL,
         method: 'GET'
     }).then(function (response) {
+        console.log(response.list)
 
         // Counter controls where the information will be stored
         var counter = 0
 
-        // Starts at the 4th result to display the noon forecast, jumps every 8 positions to get the noon forecast for each day.
-        for (var i = 3; i < response.list.length; i += 8) {
+        //  Jumps every 8 positions to get 1 weather forecast per day.
+        for (var i = 0; i < response.list.length; i += 8) {
 
             var temp = response.list[i].main.temp
             // Convert temp from Kelvin to Fahrenheit 
@@ -100,7 +102,7 @@ function getWeather(userInput) {
         url: dayURL,
         method: 'GET'
     }).then(function (response) {
-        console.log(response)
+        // console.log(response)
         var temp = response.main.temp
         temp = Math.floor(((temp - 273.15) * 1.8) + 32)
         var humidity = response.main.humidity
@@ -154,13 +156,13 @@ function getWeather(userInput) {
 function checkConditions(condition) {
     switch (condition) {
         case 'Clouds':
-            condition = '<i class="fas fa-cloud-sun"></i>'
+            condition = '<i class="fas fa-cloud-sun" style="color: lightgrey"></i>'
             break
         case 'Clear':
             condition = '<i class="fas fa-sun" style="color:orange"></i>'
             break
         case 'Rain':
-            condition = '<i class="fas fa-cloud-rain" style="color:lightgrey"></i>'
+            condition = '<i class="fas fa-cloud-rain" style="color:grey"></i>'
             break
         case 'Snow':
             condition = '<i class="fas fa-snowflake"></i>'
