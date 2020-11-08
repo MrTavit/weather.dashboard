@@ -126,12 +126,11 @@ function getWeather(userInput) {
 
         $.ajax({
             // Call for the OpenWeatherMap UV Index API.
-            url: `http://api.openweathermap.org/data/2.5/uvi?lat=${latitude}&lon=${longitude}&appid=52f80a8e6eee61dc210e113236e5b264`,
+            url: `https://api.openweathermap.org/data/2.5/uvi?lat=${latitude}&lon=${longitude}&appid=52f80a8e6eee61dc210e113236e5b264`,
             method: 'GET'
         }).then(function (response) {
             var uvIndex = $('#uvIndex')
             uvIndex.html(`${response.value}`)
-
             // Changes the color of the text field based on the value
             switch (true) {
                 case (response.value < 3 && response.value >= 0):
