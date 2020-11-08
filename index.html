@@ -21,9 +21,7 @@
             <h1 class="display-4 text-center">Weather Dashboard</h1>
         </div>
 
-        <div class="row">
 
-            <div class="col-3">
                 <form id='search-form'>
                     <label for="search-box">Search for a city:</label>
                     <input type="text" id='search-box' placeholder="City">
@@ -43,9 +41,9 @@
                     <div id="userCity9"></div>
                     <div id="userCity10"></div>
                 </div>
-            </div>
 
-            <div class="col-9">
+
+            <div class="currentDayContainer">
                 <h2>
                     <span id="city"></span>
                     <span id='currentDate'></span>
@@ -56,27 +54,51 @@
                 <div>Wind Speed: <span id='windSpeed'></span> MPH </div>
                 <div>UV Index: <span id='uvIndex'></span> </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-3"></div>
-            <div class="col-9">
+        <div class="fiveDayContainer">
+            <!-- <div class="col"></div> -->
+            <div class="">
                 <h2>5-Day Forecast:</h2>
-                <div class="row row-cols-5">
+                <div class="card-deck">
                     <!-- Each day card should display Date, weather icon, temperature, humidity -->
-                    <div id='day1' class="card text-white bg-primary mb-3" style='max-width: 18rem;'>
-                        <div class="card-header"></div>
+                    <div id='day1' class="card text-white bg-primary mb-3">
+                        <div class='card-body'>
+                            <h5 id="cardDate1" class="card-title"></h5>
+                            <div id="condition1"></div>
+                            <div id="temp1"></div>
+                            <div id="humid1"></div>
+                        </div>
                     </div>
-                    <div id='day2' class="card text-white bg-primary mb-3" style='max-width: 18rem;'>
-                        <div class="card-header"></div>
+                    <div id='day2' class="card text-white bg-primary mb-3">
+                        <div class="card-body">
+                            <h5 id="cardDate2" class="card-title"></h5>
+                            <div id="condition2"></div>
+                            <div id="temp2"></div>
+                            <div id="humid2"></div>
+                        </div>
                     </div>
-                    <div id='day3' class="card text-white bg-primary mb-3" style='max-width: 18rem;'>
-                        <div class="card-header"></div>
+                    <div id='day3' class="card text-white bg-primary mb-3">
+                        <div class="card-body">
+                            <h5 id="cardDate3" class="card-title"></h5>
+                            <div id="condition3"></div>
+                            <div id="temp3"></div>
+                            <div id="humid3"></div>
+                        </div>
                     </div>
-                    <div id='day4' class="card text-white bg-primary mb-3" style='max-width: 18rem;'>
-                        <div class="card-header"></div>
+                    <div id='day4' class="card text-white bg-primary mb-3">
+                        <div class="card-body">
+                            <h5 id="cardDate4" class="card-title"></h5>
+                            <div id="condition4"></div>
+                            <div id="temp4"></div>
+                            <div id="humid4"></div>
+                        </div>
                     </div>
-                    <div id='day5' class="card text-white bg-primary mb-3" style='max-width: 18rem;'>
-                        <div class="card-header"></div>
+                    <div id='day5' class="card text-white bg-primary mb-3">
+                        <div class="card-body">
+                            <h5 id="cardDate5" class="card-title"></h5>
+                            <div id="condition5"></div>
+                            <div id="temp5"></div>
+                            <div id="humid5"></div>
+                        </div>
                     </div>
                 </div>
             </div>
